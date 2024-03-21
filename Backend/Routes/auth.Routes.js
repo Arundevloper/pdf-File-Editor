@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
+
+//Middlewares
 const authenticate=require('../middleware/authenticationToken.middleware');
+const extractUserDataFromToken=require('../middleware/extractUsersId.middleware');
+
+//Controllers
 const registerController = require('../controllers/userRegister.controller');
 const loginController = require('../controllers/login.controller');
+
+//jwt files
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
-
 
 // Register route
 router.post('/register',registerController);
@@ -13,20 +19,20 @@ router.post('/register',registerController);
 // Login route
 router.post('/login',loginController);
 
-//Home page route
-router.post('/home',authenticate,(req,res)=>{
-    const token = req.cookies.uid;
-    if (token) {
-        // Decode JWT token
-        const decoded = jwt.verify(token, jwtSecret);
-        
-        //res.render('dashboard', {name: decoded.name });
-        res.send( {name: decoded.name });
-      } else {
-        // Handle case where token is missing or invalid
-        res.send( {"error": "login First" }) 
-      }
-    });
+
+
+
+// Logout route
+router.get('/logout', (req, res) => {
+  // Clear the JWT token from cookies
+  res.clearCookie('uid');
+
+  // Respond with success message or status code
+  res.status(200).json({ message: 'Logout successful' });
+});
+
+
+
   
 
 module.exports = router;

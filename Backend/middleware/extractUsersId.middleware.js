@@ -1,18 +1,29 @@
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 
-const extractEmployeeId = (req, res, next) => {
+const extractUserDataFromToken = (req, res, next) => {
+    const token = req.cookies.uid; // Assuming the JWT token is stored in a cookie named 'uid'
+
+    if (!token) {
+        return res.status(401).send('mai hus Unauthorized'); // Send 401 Unauthorized if token is missing
+    }
+
     try {
-        const token = req.cookies.uid; // Assuming JWT is stored in a cookie named 'uid'
-        if (!token) {
-            throw new Error('Token not found');
-        }
-        const decoded = jwt.verify(token, jwtSecret); // Replace 'arun@123' with your actual JWT secret key
-        req.id = decoded.id; // Assuming 'id' is stored in the token
-        next();
+        // Decode JWT token
+        const decoded = jwt.verify(token, jwtSecret);
+
+        // Add user ID and username to the request object
+        req.userId = decoded.id;
+        req.username = decoded.name;
+        
+        // console.log(  decoded.id);
+        // console.log(  decoded.name);
+
+        next(); // Move to the next middleware or route handler
     } catch (error) {
-        res.status(401).json({ message: 'Invalid token' });
+        console.error('Error decoding JWT token:', error);
+        res.status(401).send('Unauthorized'); // Send 401 Unauthorized if token is invalid
     }
 };
 
-module.exports = extractEmployeeId;
+module.exports = extractUserDataFromToken;

@@ -5,7 +5,7 @@ const pdfSchema = new mongoose.Schema({
     //Refrence of user for each pdf file
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'userRegister',
         required: true
     },
 
