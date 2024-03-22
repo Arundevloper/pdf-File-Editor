@@ -9,8 +9,8 @@ const authenticate=require('../middleware/authenticationToken.middleware');
 
 //controllers
 const {saveUploadedFile}=require('../controllers/uploadPdf.controller');
-const {getPdfByUser,deletePDF}=require('../controllers/pdfoperation.controller');
-const { updatePDF}=require('../controllers/updatePDF.controller');
+const {getPdfByUser,deletePDF,getPdfPagesCount}=require('../controllers/pdfoperation.controller');
+const { extractPagesAndCreatePDF }=require('../controllers/extractPagesAndCreatePDF.controller');
 
 //Router to save pdf file in database and in upload file
 router.post('/uploadpdf',authenticate,uploadpdf,extractUserDataFromToken,saveUploadedFile);
@@ -27,7 +27,9 @@ router.get('/view-pdf/:filename', (req, res) => {
 // Define a route to delete a PDF file
 router.delete('/delete-pdf/:filename',authenticate, deletePDF);
 
-router.post('/update-pdf',updatePDF);
+router.get('/extract-pdf/:filename',getPdfPagesCount);
+
+router.post('/extract-pdf',extractPagesAndCreatePDF);
 
 
 module.exports=router;

@@ -1,0 +1,145 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.navbar1 {
+    background-color: #00ADB5 !important;
+    padding: 3px;
+    border-radius: 8px;
+    position: relative;
+    top: 0;
+    width: 100%;
+}
+
+
+.navbar-brand {
+    font-size: 30px !important;
+    font-style: italic;
+    font-weight: bold;
+    color: #EEEEEE !important;
+    
+}
+
+.nav-item {
+    font-size: 20px;
+    padding: 8px;
+}
+
+.username {
+    color: #393E46 !important;
+    font-weight: 700 !important;
+
+}
+
+.usernav {
+    cursor: default !important;
+}
+
+.outerBox {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end;
+}
+
+.logout {
+    padding: 5px;
+    margin-left: 5px !important;
+    background-color: #EEEEEE!important;
+    cursor: pointer;
+    border-radius: 3px;
+    color: #393E46;
+    padding: 5px !important;
+}
+
+.logout:hover {
+    cursor: pointer;
+    border-radius: 3px;
+    color: #393E46;
+}
+
+.usernames {
+    color: #EEEEEE
+    
+}
+.usernav{
+    cursor:default;
+}
+.usernav1{
+    
+    padding: 2px !important;
+}
+
+@media screen and (max-width: 984px) {
+    .navbar-expand-lg  .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .ul-list li {
+        margin-left: 10px;
+    }
+}
+
+@media screen and (max-width: 756px) {
+    .navbar-expand-lg  .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .ul-list li {
+        margin-left: 10px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .navbar-expand-lg  .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    .ul-list li {
+        margin-left: 10px;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .navbar-expand-lg  .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+
+    }
+
+    .navbar-brand {
+        font-size: 25px;
+    }
+
+    .nav-item {
+        font-size: 18px;
+    }
+
+    .ul-list li {
+        margin-left: 10px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .navbar-expand-lg  .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+
+    }
+
+    .navbar-brand {
+        font-size: 25px;
+    }
+
+    .nav-item {
+        font-size: 25px !important;
+    }
+
+    .ul-list li {
+        margin-left: 10px;
+    }
+}

@@ -48,7 +48,27 @@ const deletePDF = async (req, res) => {
 };
 
 
+async function getPdfPagesCount(req, res) {
+    const filename = req.params.filename;
+
+    try {
+        // Read the PDF file
+        const pdfBytes = await fs.readFile(`../Backend/uploads/${filename}`);
+
+        // Load the PDF document
+        const pdfDoc = await PDFDocument.load(pdfBytes);
+
+        // Get the number of pages
+        const pageCount = pdfDoc.getPageCount();
+
+        // Send the number of pages as a response
+        res.status(200).json({ pageCount });
+    } catch (error) {
+        console.error('Error getting PDF page count:', error);
+        res.status(500).json({ error: 'An error occurred while getting PDF page count' });
+    }
+}
 
 module.exports = {
-    getPdfByUser,deletePDF
+    getPdfByUser,deletePDF,getPdfPagesCount
 };
