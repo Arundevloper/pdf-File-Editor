@@ -23,6 +23,7 @@ async function register(req, res) {
         // Save the new user to the database
         await newUser.save();
 
+        console.log("Register successfully");
         // Respond with success message or perform any additional actions
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {

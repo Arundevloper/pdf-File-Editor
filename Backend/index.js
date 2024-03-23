@@ -2,6 +2,8 @@ const express=require('express');
 const app=express();
 require('dotenv').config();
 const path = require('path');
+const cors = require('cors');
+app.use(cors());
 
 
 const Routes=require('./Routes/auth.Routes');
@@ -26,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/',Routes);
 app.use('/',pdfRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 connectDb('pdf_Editor');
 app.listen(PORT,()=>{
     console.log(`Server started at ${PORT}`);

@@ -14,16 +14,16 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 
 // Register route
-router.post('/register',registerController);
+router.post('/api/register',registerController);
 
 // Login route
-router.post('/login',loginController);
+router.post('/api/login',loginController);
 
 
 
 
 // Logout route
-router.get('/logout', (req, res) => {
+router.get('/api/logout', (req, res) => {
   // Clear the JWT token from cookies
   res.clearCookie('uid');
 

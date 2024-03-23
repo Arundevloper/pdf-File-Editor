@@ -21,9 +21,11 @@ async function login(req, res) {
         if (!passwordMatch) {
             return res.status(400).send("invalid user Name and password");
         }
-        console.log(user);
+        
+        console.log("Login successFully");
         const token = setUser(user);
         res.cookie("uid", token);
+        
 
         //if successfully logined send this respose to the user
         return res.redirect('/home');
