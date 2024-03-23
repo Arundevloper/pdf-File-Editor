@@ -9,8 +9,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <PageSelector pageCount={20} />
-      
+      <Login/>
     </>
   );
 }

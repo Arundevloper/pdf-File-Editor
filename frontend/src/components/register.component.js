@@ -10,37 +10,49 @@ const RegistrationForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
 
-    // Here you can perform any validation or processing before submitting the form data
+    // Creating an object to hold user registration data
+    const userData = {
+      name: name,
+      email: email,
+      password: password,
+      gender: gender
+    };
 
-    // Creating a FormData object to hold form data
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('gender', gender);
-
-    // Submitting the form data
-    fetch('your-submit-url', {
+    // Submitting user registration data to the backend
+    fetch('http://localhost:5000/api/register', { 
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
     })
       .then(response => {
-        // Handle response as needed
-        console.log('Form submitted successfully:', response);
+        if (response.ok) {
+          // Registration successful
+          console.log('Registration successful');
+          // You can redirect the user to a login page or perform other actions here
+        } else {
+          // Registration failed
+          console.error('Registration failed');
+        }
       })
       .catch(error => {
         // Handle error
-        console.error('Error submitting form:', error);
+        console.error('Error registering user:', error);
       });
   };
 
   return (
     <div className="outerDiv">
       <div className="innerDiv">
+
+
         <form onSubmit={handleSubmit}>
           <div className="login-label">
             <label htmlFor="exampleInputEmail1">Register</label>
           </div>
+
+
           <div className="form-group">
             <label htmlFor="exampleInputName">Name</label>
             <input
@@ -52,6 +64,8 @@ const RegistrationForm = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
+
+
           <div className="form-group">
             <label htmlFor="exampleInputEmail">Email address</label>
             <input
@@ -65,20 +79,23 @@ const RegistrationForm = () => {
             />
             <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
+
+
           <div className="form-group">
             <label htmlFor="exampleGender">Gender</label>
             <select
               className="form-control"
               id="exampleGender"
               value={gender}
-              onChange={(e) => setGender(e.target.value)}
-            >
+              onChange={(e) => setGender(e.target.value)} >
               <option value="">Select gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
           </div>
+
+
           <div className="form-group">
             <label htmlFor="exampleInputPassword">Password</label>
             <input
@@ -91,10 +108,12 @@ const RegistrationForm = () => {
             />
           </div>
           
+
           <div className='submitButon'>
             <button type="submit" className="btn btn-primary">Register</button>
           </div>
         </form>
+
       </div>
     </div>
   );
