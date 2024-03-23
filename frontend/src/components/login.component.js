@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
 import '../css/login.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const MyForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -25,6 +28,7 @@ const MyForm = () => {
         if (response.data.message) {
           // Display success message
           setErrorMessage(response.data.message);
+          navigate('/home');
         }
       })
       .catch(error => {
