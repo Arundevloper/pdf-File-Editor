@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SuccessModal from './success.component';
-import DeleteSuccessModal  from './success.component';
+import DeleteSuccessModal from './success.component';
 import '../css/table.css';
 
 const DynamicTable = () => {
@@ -63,7 +63,7 @@ const DynamicTable = () => {
   };
   const handleCloseDeleteSuccessModal = () => {
     setShowDeleteSuccessModal(false);
-};
+  };
 
   const handleFileUpload = () => {
     const input = document.getElementById('fileUpload');
@@ -78,16 +78,16 @@ const DynamicTable = () => {
     formData.append('uploadpdf', file);
 
     axios.post('http://localhost:5000/api/uploadpdf', formData, {
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  },
-  withCredentials: true
-})
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      withCredentials: true
+    })
       .then(response => {
         setShowSuccessModal(true);
         console.log('File uploaded successfully:', response.data);
         fetchData();
-      
+
       })
       .catch(error => {
         console.error('Error uploading file:', error);
@@ -101,13 +101,15 @@ const DynamicTable = () => {
 
   const handleExtract = (fileName) => {
     console.log(`Extracting file: ${fileName}`);
+    navigate(`/extract/${fileName}`);
+
   };
 
 
 
   const handleDelete = (fileName) => {
 
-    axios.delete(`http://localhost:5000/api/delete-pdf/${fileName}`,{ withCredentials: true })
+    axios.delete(`http://localhost:5000/api/delete-pdf/${fileName}`, { withCredentials: true })
       .then(response => {
         console.log(`File "${fileName}" deleted successfully`);
         fetchData();
@@ -121,10 +123,31 @@ const DynamicTable = () => {
   };
 
 
+  const handleView = async (fileName) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/view-pdf/${fileName}`, {
+        responseType: 'blob', // Specify response type as blob
+        withCredentials: true
+      });
 
-  const handleView = (fileName) => {
-    console.log(`Viewing file: ${fileName}`);
+      // Create a Blob object from the response data
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+
+      // Create a temporary URL for the Blob object
+      const url = window.URL.createObjectURL(blob);
+
+      // Open a new window to display the PDF using the embedded PDF viewer
+      window.open(url, '_blank');
+
+      // Clean up: revoke the URL
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error viewing PDF:', error);
+    }
   };
+
+
+
 
 
   return (
@@ -139,7 +162,7 @@ const DynamicTable = () => {
             <button className="btn uploadBtn mr-2" onClick={handleFileUpload}>Upload</button>
           </div>
           <SuccessModal show={showSuccessModal} handleClose={handleCloseSuccessModal} message="File uploaded successfully!" />
-          
+
         </div>
       </div>
       <h2>PDF Files</h2>
@@ -151,15 +174,15 @@ const DynamicTable = () => {
           </tr>
         </thead>
         <tbody>
-        {pdfFiles.length === 0 && (
-          <div className="empty">
-<p>No files are uploaded.</p>
-          </div>
-    
-)}
+          {pdfFiles.length === 0 && (
+            <div className="empty">
+              <p>No files are uploaded.</p>
+            </div>
+
+          )}
           {pdfFiles.map((item, index) => (
             <tr key={index}>
-              <td>{item.filename}</td>
+              <td>{item.filename.substring(14)}</td>
               <td>
                 <button className="btn mr-2" onClick={() => handleView(item.filename)}>View</button>
                 <button className="btn mr-2" onClick={() => handleExtract(item.filename)}>Extract</button>
@@ -170,8 +193,8 @@ const DynamicTable = () => {
         </tbody>
       </table>
       {showDeleteSuccessModal && (
-                <DeleteSuccessModal show={showDeleteSuccessModal} handleClose={handleCloseDeleteSuccessModal} message="File deleted successfully!" />
-            )}
+        <DeleteSuccessModal show={showDeleteSuccessModal} handleClose={handleCloseDeleteSuccessModal} message="File deleted successfully!" />
+      )}
     </div>
   );
 };

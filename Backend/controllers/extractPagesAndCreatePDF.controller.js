@@ -4,8 +4,9 @@ const path = require('path');
 const { overwritePDF } = require('../utils/pdfUtils');
 
 async function extractPagesAndCreatePDF(req, res) {
+    
     const { filename, selectedPages } = req.body;
-
+    console.log("mai fie name hu"+filename);
     try {
         // Read the original PDF file
         const originalPdfBytes = await fs.readFile(`../Backend/uploads/${filename}`);

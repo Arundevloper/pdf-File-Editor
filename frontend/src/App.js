@@ -29,7 +29,7 @@ function App() {
           />
           <Route path='/register' element={<RegistrationForm />} />
           <Route path='/home' element={<DynamicTable />} />
-          <Route path='/extract' element={<PageSelector />} />
+          <Route path='/extract/:fileName' element={<PageSelector />} />
         </Routes>
       </Router>
     </>

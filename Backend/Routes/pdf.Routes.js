@@ -22,17 +22,16 @@ router.post('/api/uploadpdf',uploadpdf,extractUserDataFromToken,saveUploadedFile
 router.get('/api/getPdfByUser',authenticate, extractUserDataFromToken,getPdfByUser);
   
 // Define a route to serve PDF files
-router.get('/view-pdf/:filename', (req, res) => {
+router.get('/api/view-pdf/:filename', (req, res) => {
     const filename = req.params.filename;
     res.sendFile(path.join(__dirname, '../uploads', filename));
 });
 
-// Define a route to delete a PDF file
 router.delete('/api/delete-pdf/:filename',authenticate, deletePDF);
 
-router.get('/extract-pdf/:filename',getPdfPagesCount);
+router.get('/api/pdfPageCount/:filename',authenticate,getPdfPagesCount);
 
-router.post('/extract-pdf',extractPagesAndCreatePDF);
+router.post('/api/extract-pdf/',authenticate,extractPagesAndCreatePDF);
 
 
 module.exports=router;
