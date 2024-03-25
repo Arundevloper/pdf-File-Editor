@@ -1,47 +1,96 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/table.css';
 
 const DynamicTable = () => {
-  // Example data for the table
   const initialData = [
     { fileName: 'Document1.pdf' },
     { fileName: 'Image1.jpg' },
     { fileName: 'Spreadsheet1.xlsx' }
   ];
-
-  // State to manage table data
   const [data, setData] = useState(initialData);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
-  // Function to handle file upload
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/checkLoginStatus', { withCredentials: true });
+        const data = response.data;
+        if (data.loggedIn) {
+          setIsLoggedIn(true);
+          setUserId(data.userId); // Assuming server sends userId in the response
+        } else {
+          setIsLoggedIn(false);
+          setUserId(null);
+          navigate('/'); // Redirect to login if not logged in
+        }
+      } catch (error) {
+        console.error("Error checking login status:", error);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+
+
+  //Handling file upload 
   const handleFileUpload = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+  
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  
+  axios.post('http://localhost:5000/api/uploadpdf', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  .then(response => {
+    console.log('File uploaded successfully:', response.data);
+  })
+  .catch(error => {
+    if (error.response) {
+      console.error('Server responded with an error:', error.response.data);
+    } else if (error.request) {
+      console.error('No response received from server:', error.request);
+    } else {
+      console.error('Error while setting up request:', error.message);
+    }
+  });
+
   };
 
-  // Function to handle extract action
   const handleExtract = (fileName) => {
-    // Implement extract action logic here
     console.log(`Extracting file: ${fileName}`);
   };
 
-  // Function to handle delete action
   const handleDelete = (fileName) => {
-    // Implement delete action logic here
     console.log(`Deleting file: ${fileName}`);
   };
 
-  // Function to handle view action
   const handleView = (fileName) => {
-    // Implement view action logic here
     console.log(`Viewing file: ${fileName}`);
   };
 
   return (
     <div className="container">
       <div className="mb-3">
-        <label htmlFor="fileUpload" className=" upload form-label">Upload PDF File:</label>
-        <input type="file" className="form-control" id="fileUpload" onChange={handleFileUpload} accept=".pdf" />
+
+      <label htmlFor="fileUpload" className="upload form-label">Upload PDF File:</label>
+      <div className="uploadField">
+        <div>
+        <input type="file" className="form-control" id="fileUpload"  accept=".pdf" />
+      </div>
+      <div>
+        <button className="btn uploadBtn mr-2" onClick={handleFileUpload}>Upload</button>
+      </div>
+      </div>
       </div>
       <h2>PDF Files</h2>
       <table className="table table-bordered">
@@ -56,10 +105,9 @@ const DynamicTable = () => {
             <tr key={index}>
               <td>{item.fileName}</td>
               <td>
-                <button className="btn mr-2 " onClick={() => handleView(item.fileName)}>View</button>
+                <button className="btn mr-2" onClick={() => handleView(item.fileName)}>View</button>
                 <button className="btn mr-2" onClick={() => handleExtract(item.fileName)}>Extract</button>
-                <button className="btn  mr-2" onClick={() => handleDelete(item.fileName)}>Delete</button>
-
+                <button className="btn mr-2" onClick={() => handleDelete(item.fileName)}>Delete</button>
               </td>
             </tr>
           ))}

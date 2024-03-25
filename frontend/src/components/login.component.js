@@ -1,45 +1,41 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 import '../css/login.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const MyForm = () => {
+const MyForm = ({ updateNavbarKey }) => { // Pass updateNavbarKey as a prop
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
 
-    // Creating an object to hold form data
     const formData = {
       email: email,
       password: password
     };
 
-    // Submitting the form data using Axios
-    axios.post('http://localhost:5000/api/login', formData)
+    axios.post('http://localhost:5000/api/login', formData, {
+        withCredentials: true
+      })
       .then(response => {
-        // Handle response
         console.log('Form submitted successfully:', response);
-        // Check if there is a success message in the response
+
         if (response.data.message) {
-          // Display success message
-          setErrorMessage(response.data.message);
+          // Trigger update of Navbar key upon successful login
+          updateNavbarKey();
           navigate('/home');
+          setErrorMessage(response.data.message);
         }
       })
       .catch(error => {
-        // Handle error
         console.error('Error submitting form:', error);
-        // Check if the error contains a custom message from the server
+
         if (error.response && error.response.data.error) {
-          // Display custom error message from server
           setErrorMessage(error.response.data.error);
         } else {
-          // Display a generic error message
           setErrorMessage('An error occurred. Please try again.');
         }
       });

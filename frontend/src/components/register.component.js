@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/login.css';
 
 const RegistrationForm = () => {
@@ -6,6 +7,8 @@ const RegistrationForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate(); 
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -30,29 +33,32 @@ const RegistrationForm = () => {
         if (response.ok) {
           // Registration successful
           console.log('Registration successful');
-          // You can redirect the user to a login page or perform other actions here
+          navigate('/', { state: { message: 'Registration successful' } }); // Navigate to login component with success message
         } else {
           // Registration failed
-          console.error('Registration failed');
+          return response.json().then(data => {
+            throw new Error(data.error || 'Registration failed');
+          });
         }
       })
       .catch(error => {
         // Handle error
         console.error('Error registering user:', error);
+        if (error instanceof Error) {
+          setErrorMessage(error.message); // Set error message if it's an Error instance
+        } else {
+          setErrorMessage('An unknown error occurred while registering user'); // Set generic error message if error is not an instance of Error
+        }
       });
   };
 
   return (
     <div className="outerDiv">
       <div className="innerDiv">
-
-
         <form onSubmit={handleSubmit}>
           <div className="login-label">
             <label htmlFor="exampleInputEmail1">Register</label>
           </div>
-
-
           <div className="form-group">
             <label htmlFor="exampleInputName">Name</label>
             <input
@@ -64,8 +70,6 @@ const RegistrationForm = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-
-
           <div className="form-group">
             <label htmlFor="exampleInputEmail">Email address</label>
             <input
@@ -79,8 +83,6 @@ const RegistrationForm = () => {
             />
             <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
-
-
           <div className="form-group">
             <label htmlFor="exampleGender">Gender</label>
             <select
@@ -94,8 +96,6 @@ const RegistrationForm = () => {
               <option value="Other">Other</option>
             </select>
           </div>
-
-
           <div className="form-group">
             <label htmlFor="exampleInputPassword">Password</label>
             <input
@@ -107,13 +107,11 @@ const RegistrationForm = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          
-
+          {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
           <div className='submitButon'>
             <button type="submit" className="btn btn-primary">Register</button>
           </div>
         </form>
-
       </div>
     </div>
   );

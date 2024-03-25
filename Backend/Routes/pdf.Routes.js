@@ -13,7 +13,10 @@ const {getPdfByUser,deletePDF,getPdfPagesCount}=require('../controllers/pdfopera
 const { extractPagesAndCreatePDF }=require('../controllers/extractPagesAndCreatePDF.controller');
 
 //Router to save pdf file in database and in upload file
-router.post('/uploadpdf',authenticate,uploadpdf,extractUserDataFromToken,saveUploadedFile);
+router.post('/api/uploadpdf',authenticate,uploadpdf,extractUserDataFromToken,saveUploadedFile);
+
+
+
 
 // Home page route
 router.post('/home',authenticate, extractUserDataFromToken,getPdfByUser);

@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/navbar.component';
@@ -9,20 +8,31 @@ import DynamicTable from './components/table.component';
 import PageSelector from './components/extract.component';
 
 function App() {
+  const [navbarKey, setNavbarKey] = useState(0); // Key for Navbar component
+
+  // Function to update Navbar key
+  const updateNavbarKey = () => {
+    setNavbarKey(prevKey => prevKey + 1);
+  };
+
   return (
-    <Router>
-      <Routes>
+    <>
+      <Router>
+        {/* Render Navbar component */}
+        <Navbar key={navbarKey} />
 
-        <Route path='/' element={<Login />} />
-        <Route path='/register' element={<RegistrationForm />} />
-        <Route path='/home' element={<DynamicTable />} />
-        <Route path='/extract' element={<PageSelector />} />
-        <Route path='/login' element={<Login />} />
-
-      </Routes>
-
-
-    </Router>
+        {/* Render Routes */}
+        <Routes>
+          <Route
+            path='/'
+            element={<Login updateNavbarKey={updateNavbarKey} />}
+          />
+          <Route path='/register' element={<RegistrationForm />} />
+          <Route path='/home' element={<DynamicTable />} />
+          <Route path='/extract' element={<PageSelector />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

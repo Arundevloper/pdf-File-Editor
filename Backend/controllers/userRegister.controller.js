@@ -1,9 +1,12 @@
 const { UserModel } = require('../models/userRegister.model');
 
-
-
 async function register(req, res) {
-    const { name, email, password,gender} = req.body;
+    const { name, email, password, gender } = req.body;
+
+    // Check if all required fields are provided
+    if (!name || !email || !password || !gender) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
 
     try {
         // Check if a user with the same email already exists
