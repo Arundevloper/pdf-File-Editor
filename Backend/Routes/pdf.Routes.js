@@ -13,13 +13,13 @@ const {getPdfByUser,deletePDF,getPdfPagesCount}=require('../controllers/pdfopera
 const { extractPagesAndCreatePDF }=require('../controllers/extractPagesAndCreatePDF.controller');
 
 //Router to save pdf file in database and in upload file
-router.post('/api/uploadpdf',authenticate,uploadpdf,extractUserDataFromToken,saveUploadedFile);
+router.post('/api/uploadpdf',uploadpdf,extractUserDataFromToken,saveUploadedFile);
 
 
 
 
 // Home page route
-router.post('/home',authenticate, extractUserDataFromToken,getPdfByUser);
+router.get('/api/getPdfByUser',authenticate, extractUserDataFromToken,getPdfByUser);
   
 // Define a route to serve PDF files
 router.get('/view-pdf/:filename', (req, res) => {
@@ -28,7 +28,7 @@ router.get('/view-pdf/:filename', (req, res) => {
 });
 
 // Define a route to delete a PDF file
-router.delete('/delete-pdf/:filename',authenticate, deletePDF);
+router.delete('/api/delete-pdf/:filename',authenticate, deletePDF);
 
 router.get('/extract-pdf/:filename',getPdfPagesCount);
 

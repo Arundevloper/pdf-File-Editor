@@ -13,7 +13,13 @@ h2{
     font-size: 20px;
    
 }
-
+.empty{
+  display: flex;
+  justify-content:center;
+  color: #00ADB5;
+  font-style: italic;
+  
+}
 .btn {
     background-color: #00ADB5; /* Set background color */
     color: #222831; /* Set text color */

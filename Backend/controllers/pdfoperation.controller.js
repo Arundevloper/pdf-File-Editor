@@ -7,6 +7,7 @@ const getPdfByUser = async (req, res) => {
     try {
         const userId = req.userId;
         const pdfFiles = await PDF.find({ user: userId });
+        console.log("file retrive successfully");
         res.status(200).json({ pdfFiles });
     } catch (error) {
         console.error('Error retrieving PDF files for user:', error);
@@ -16,6 +17,8 @@ const getPdfByUser = async (req, res) => {
 
 const deletePDF = async (req, res) => {
     try {
+        console.log("check");
+        
         const filename = req.params.filename;
         const pdf = await PDF.findOne({ filename });
 
