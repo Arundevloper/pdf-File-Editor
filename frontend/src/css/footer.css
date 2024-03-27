@@ -1,0 +1,12 @@
+/* footer.css */
+
+.footer {
+    background-color: #343a40; /* Dark background color */
+    color: white; /* Text color */
+    padding: 20px; /* Padding around content */
+  }
+  
+  .footer p {
+    margin-bottom: 5px; /* Add space between paragraphs */
+  }
+  

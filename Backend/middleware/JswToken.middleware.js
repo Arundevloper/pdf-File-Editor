@@ -3,6 +3,7 @@ const jwtSecret = process.env.JWT_SECRET;
 
 function setUser(user) {
     try {
+        
         // Extract necessary information from the user object
         const payload = {
             id: user._id,

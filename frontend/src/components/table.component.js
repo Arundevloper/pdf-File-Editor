@@ -4,6 +4,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SuccessModal from './success.component';
 import DeleteSuccessModal from './success.component';
+import MessageBox from './message.component';
 import '../css/table.css';
 
 const DynamicTable = () => {
@@ -11,9 +12,23 @@ const DynamicTable = () => {
   const [pdfFiles, setPdfFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState('');
+  const [color, setColor] = useState('');
   const navigate = useNavigate();
+
+
+  //Message and Alert Handler
+  const handleShowMessage = (message, color) => {
+    setMessage(message);
+    setColor(color);
+    setShowMessage(true);
+  };
+
+  const handleCloseMessage = () => {
+    setShowMessage(false);
+  };
+
 
 
   //Check if the user login or not if not navigate it to login page
@@ -32,6 +47,8 @@ const DynamicTable = () => {
     checkLoginStatus();
   }, []);
 
+
+
   //Retrive the files form server
   const fetchData = async () => {
     try {
@@ -44,26 +61,10 @@ const DynamicTable = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
 
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  const handleCloseSuccessModal = () => {
-    setShowSuccessModal(false);
-  };
-  const handleCloseDeleteSuccessModal = () => {
-    setShowDeleteSuccessModal(false);
-  };
 
   const handleFileUpload = () => {
     const input = document.getElementById('fileUpload');
@@ -71,6 +72,7 @@ const DynamicTable = () => {
 
     if (!file) {
       console.error('No file selected.');
+      handleShowMessage('No files selected', 'info');
       return;
     }
 
@@ -84,19 +86,16 @@ const DynamicTable = () => {
       withCredentials: true
     })
       .then(response => {
-        setShowSuccessModal(true);
-        console.log('File uploaded successfully:', response.data);
+        handleShowMessage('File uploaded successfully', 'success');
         fetchData();
 
       })
       .catch(error => {
         console.error('Error uploading file:', error);
-        // Handle upload error
+        handleShowMessage('Duplicate file detected', 'danger');
+        
       });
   };
-
-
-
 
 
   const handleExtract = (fileName) => {
@@ -108,18 +107,18 @@ const DynamicTable = () => {
 
 
   const handleDelete = (fileName) => {
-
     axios.delete(`http://localhost:5000/api/delete-pdf/${fileName}`, { withCredentials: true })
       .then(response => {
+        const fileNameSub = fileName.substring(14);
         console.log(`File "${fileName}" deleted successfully`);
         fetchData();
-        setShowDeleteSuccessModal(true);
+        handleShowMessage(`"${fileNameSub} file deleted"`, 'success');
       })
       .catch(error => {
+        const fileNameSub = fileName.substring(14);
         console.error(`Error deleting file "${fileName}":`, error);
-
+        handleShowMessage(`Error deleting file "${fileName}": ${error.message}`, 'danger');
       });
-
   };
 
 
@@ -152,6 +151,9 @@ const DynamicTable = () => {
 
   return (
     <div className="container">
+      {showMessage && (
+        <MessageBox message={message} color={color} onClose={handleCloseMessage} />
+      )}
       <div className="mb-3">
         <label htmlFor="fileUpload" className="upload form-label">Upload PDF File:</label>
         <div className="uploadField">
@@ -161,7 +163,7 @@ const DynamicTable = () => {
           <div>
             <button className="btn uploadBtn mr-2" onClick={handleFileUpload}>Upload</button>
           </div>
-          <SuccessModal show={showSuccessModal} handleClose={handleCloseSuccessModal} message="File uploaded successfully!" />
+        
 
         </div>
       </div>
@@ -174,6 +176,14 @@ const DynamicTable = () => {
           </tr>
         </thead>
         <tbody>
+
+          {
+            loading && (
+              <div className="empty">
+                <p>Loading...</p>
+              </div>
+            )
+          }
           {pdfFiles.length === 0 && (
             <div className="empty">
               <p>No files are uploaded.</p>
@@ -192,9 +202,6 @@ const DynamicTable = () => {
           ))}
         </tbody>
       </table>
-      {showDeleteSuccessModal && (
-        <DeleteSuccessModal show={showDeleteSuccessModal} handleClose={handleCloseDeleteSuccessModal} message="File deleted successfully!" />
-      )}
     </div>
   );
 };

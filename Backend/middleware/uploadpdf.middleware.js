@@ -15,12 +15,8 @@ const customerStorage = multer.diskStorage({
 
   const multerErrorHandler = (err, req, res, next) => {
     if (err instanceof multer.MulterError) {
-      // Multer error occurred
-      console.error('Multer error:', err);
-      res.status(500).json({ error: 'Multer error occurred' });
+      res.status(500).json({ error: 'pdf Files are allowed only' });
     } else {
-      // Other errors occurred
-      console.error('Error during file upload:', err);
       res.status(500).json({ error: 'An error occurred during file upload' });
     }
   };

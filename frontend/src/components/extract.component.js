@@ -26,19 +26,12 @@ const PageSelector = () => {
     fetchPageNumbers();
   }, []);
 
-
-
-
-
-
-
-  
   const handleExtractPages = async () => {
     const data = {
       filename: fileName,
       selectedPages: selectedPages
     };
-  
+
     try {
       const response = await fetch('http://localhost:5000/api/extract-pdf', {
         method: 'POST',
@@ -48,9 +41,7 @@ const PageSelector = () => {
         body: JSON.stringify(data),
         credentials: 'include'
       });
-      
-  
-  
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       window.open(url, '_blank');
@@ -59,8 +50,8 @@ const PageSelector = () => {
       console.error('Error extracting PDF:', error);
     }
   };
-  
-  
+
+
 
 
 
@@ -78,7 +69,7 @@ const PageSelector = () => {
     });
   };
 
-  
+
   return (
     <div className="page-selector-container page-label div">
       <h3 className="page-selector-title">Select Pages You Want To Extract</h3>

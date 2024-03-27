@@ -8,7 +8,8 @@ const RegistrationForm = () => {
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate(); 
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -22,7 +23,7 @@ const RegistrationForm = () => {
     };
 
     // Submitting user registration data to the backend
-    fetch('http://localhost:5000/api/register', { 
+    fetch('http://localhost:5000/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

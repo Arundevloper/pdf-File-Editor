@@ -21,12 +21,12 @@ h2{
   
 }
 .btn {
-    background-color: #00ADB5; /* Set background color */
-    color: #222831; /* Set text color */
+    background-color: #00ADB5; 
+    color: #222831; 
   }
   
   .btn:hover {
-    background-color: #EEEEEE; /* Change background color on hover */
+    background-color: #EEEEEE; 
     color: #222831
   }
   .submitButon{
