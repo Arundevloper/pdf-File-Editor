@@ -74,7 +74,7 @@ const MyForm = ({ updateNavbarKey }) => { // Pass updateNavbarKey as a prop
           </div>
           {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
           <div className='submitButon'>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary">Login</button>
           </div>
         </form>
       </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../css/extractor.css';
@@ -8,7 +9,7 @@ const PageSelector = () => {
   const { fileName } = useParams();
   const [pageCount, setPageCount] = useState(0);
   const [selectedPages, setSelectedPages] = useState([]);
-
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   //Retrive the files form server
   const fetchPageNumbers = async () => {
@@ -43,7 +44,7 @@ const PageSelector = () => {
         body: JSON.stringify(data),
         credentials: 'include'
       });
-
+      navigate('/home');
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       window.open(url, '_blank');
@@ -72,7 +73,7 @@ const PageSelector = () => {
 
   return (
     <div className="page-selector-container page-label div">
-      <h3 className="page-selector-title">Select Pages You Want To Extract</h3>
+      <h3 className="page-selector-title">Select Pages(select in order wise if you want)</h3>
       <ul className="page-list">
 
         {[...Array(pageCount)].map((_, index) => (

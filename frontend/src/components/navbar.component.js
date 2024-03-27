@@ -45,11 +45,14 @@ const Navbar = () => {
   const handleRegister = () => {
     // Navigate to the register page if not already on it, or to the login page if already on the register page
     if (isRegisterPage) {
-      navigate('/');
+      navigate('/home');
     } else {
       navigate('/register');
     }
   };
+  // const handleMerge = () => {
+  //     navigate('/mergepdf');
+  // };
 
   return (
     <div>
@@ -65,6 +68,9 @@ const Navbar = () => {
                   <li className="nav-item usernav1">
                     <a className="nav-link usernav" href="#"><span className="username">Welcome-</span><span className='usernames'>{username}</span></a>
                   </li>
+                  {/* <li className="nav-item" >
+                    <a className="nav-link logout" href="#" onClick={handleMerge}>MergePDF</a>
+                  </li> */}
                   <li className="nav-item" >
                     <a className="nav-link logout" href="#" onClick={handleLogout}>Logout</a>
                   </li>
