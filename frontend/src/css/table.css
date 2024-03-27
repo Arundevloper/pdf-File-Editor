@@ -1,56 +1,82 @@
-.container{
-    width:50% !important;
-    
+.container {
+  width: 50% !important;
+
 }
-h2{
-    color:#00ADB5;
-    font-style: italic;
-}
-.upload{
-    color:#00ADB5;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 20px;
-   
-}
-.empty{
-  display: flex;
-  justify-content:center;
+
+h2 {
   color: #00ADB5;
   font-style: italic;
-  
 }
+
+.upload {
+  color: #00ADB5;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 20px;
+
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  color: #00ADB5;
+  font-style: italic;
+
+}
+
 .btn {
-    background-color: #00ADB5; 
-    color: #222831; 
-  }
-  
-  .btn:hover {
-    background-color: #EEEEEE; 
-    color: #222831
-  }
-  .submitButon{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .mb-3{
-    
-    margin-top:20px !important
-  }
-  .uploadField{
-    display: flex !important;
-  
-  }
-  .uploadBtn{
-    margin-left:10px !important;
-  }
+  background-color: #00ADB5;
+  color: #222831;
+}
+
+.btn:hover {
+  background-color: #EEEEEE;
+  color: #222831
+}
+
+.submitButon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mb-3 {
+
+  margin-top: 20px !important
+}
+
+.uploadField {
+  display: flex !important;
+
+}
+
+.uploadBtn {
+  margin-left: 10px !important;
+}
+
+
+.pagination-button {
+  background-color: #00ADB5;
+  color: #EEEEEE;
+ border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+
+}
+
+.pagination-button:hover {
+  background-color: #EEEEEE;
+  color: #000000;
+}
+
 @media screen and (max-width: 756px) {
-   
-    .container{
-        width: auto !important;
-    }
-    .btn{
-        padding: 6px !important;
-    }
+
+  .container {
+    width: auto !important;
+  }
+
+  .btn {
+    padding: 6px !important;
+  }
 }

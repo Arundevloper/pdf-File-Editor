@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import SuccessModal from './success.component';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../css/extractor.css';
+
 
 const PageSelector = () => {
   const { fileName } = useParams();
@@ -26,6 +26,8 @@ const PageSelector = () => {
     fetchPageNumbers();
   }, []);
 
+
+  
   const handleExtractPages = async () => {
     const data = {
       filename: fileName,
@@ -52,17 +54,15 @@ const PageSelector = () => {
   };
 
 
-
-
-
-
   //Keep the tract of page number selected
   const togglePageSelection = (pageNumber) => {
     setSelectedPages(prevSelectedPages => {
       if (prevSelectedPages.includes(pageNumber)) {
+
         // Deselect the page if it's already selected
         return prevSelectedPages.filter(page => page !== pageNumber);
       } else {
+
         // Select the page if it's not already selected
         return [...prevSelectedPages, pageNumber];
       }

@@ -8,6 +8,7 @@ import RegistrationForm from './components/register.component';
 import DynamicTable from './components/table.component';
 import PageSelector from './components/extract.component';
 import PDFPageOrder from './components/pageorder.component';
+import MainComponent from './components/pageorder.component';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path='/home' element={<DynamicTable />} />
           <Route path='/extract/:fileName' element={<PageSelector />} />
           <Route path='/page' element={<PDFPageOrder />} />
+          <Route path='/listview' element={<MainComponent />} />
         
          
           

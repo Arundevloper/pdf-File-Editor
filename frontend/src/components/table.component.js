@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SuccessModal from './success.component';
-import DeleteSuccessModal from './success.component';
 import MessageBox from './message.component';
 import '../css/table.css';
 
@@ -15,8 +13,9 @@ const DynamicTable = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
   const [color, setColor] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
-
 
   //Message and Alert Handler
   const handleShowMessage = (message, color) => {
@@ -24,9 +23,11 @@ const DynamicTable = () => {
     setColor(color);
     setShowMessage(true);
   };
-
   const handleCloseMessage = () => {
     setShowMessage(false);
+  };
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
 
@@ -52,8 +53,11 @@ const DynamicTable = () => {
   //Retrive the files form server
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/getPdfByUser', { withCredentials: true });
+      const response = await axios.get(`http://localhost:5000/api/getPdfByUser?page=${currentPage}`, { withCredentials: true });
       setPdfFiles(response.data.pdfFiles);
+      setTotalPages(response.data.totalPages);
+      console.log("toatl page is" + response.data)
+
     } catch (error) {
       console.error('Error fetching data:', error);
       setError('Error fetching data');
@@ -61,10 +65,10 @@ const DynamicTable = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
-  }, []);
-
+  }, [currentPage]);
 
   const handleFileUpload = () => {
     const input = document.getElementById('fileUpload');
@@ -76,26 +80,33 @@ const DynamicTable = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('uploadpdf', file);
+    if (file.type !== 'application/pdf') {
+      handleShowMessage('Please select a PDF file..', 'danger');
+    }
+    else {
+      const formData = new FormData();
+      formData.append('uploadpdf', file);
 
-    axios.post('http://localhost:5000/api/uploadpdf', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      withCredentials: true
-    })
-      .then(response => {
-        handleShowMessage('File uploaded successfully', 'success');
-        fetchData();
-
+      axios.post('http://localhost:5000/api/uploadpdf', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        withCredentials: true
       })
-      .catch(error => {
-        console.error('Error uploading file:', error);
-        handleShowMessage('Duplicate file detected', 'danger');
-        
-      });
+        .then(response => {
+
+          handleShowMessage('File uploaded successfully', 'success');
+          fetchData(); // Fetch data only if upload is successful
+
+        })
+        .catch(error => {
+          console.error('Error uploading:', error);
+          handleShowMessage('Duplicate file detected', 'danger');
+        });
+    }
+
   };
+
 
 
   const handleExtract = (fileName) => {
@@ -112,7 +123,7 @@ const DynamicTable = () => {
         const fileNameSub = fileName.substring(14);
         console.log(`File "${fileName}" deleted successfully`);
         fetchData();
-        handleShowMessage(`"${fileNameSub} file deleted"`, 'success');
+        handleShowMessage(`"${fileNameSub} file deleted"`, 'danger');
       })
       .catch(error => {
         const fileNameSub = fileName.substring(14);
@@ -163,8 +174,6 @@ const DynamicTable = () => {
           <div>
             <button className="btn uploadBtn mr-2" onClick={handleFileUpload}>Upload</button>
           </div>
-        
-
         </div>
       </div>
       <h2>PDF Files</h2>
@@ -176,8 +185,7 @@ const DynamicTable = () => {
           </tr>
         </thead>
         <tbody>
-
-          {
+        {
             loading && (
               <div className="empty">
                 <p>Loading...</p>
@@ -190,18 +198,34 @@ const DynamicTable = () => {
             </div>
 
           )}
-          {pdfFiles.map((item, index) => (
-            <tr key={index}>
-              <td>{item.filename.substring(14)}</td>
-              <td>
-                <button className="btn mr-2" onClick={() => handleView(item.filename)}>View</button>
-                <button className="btn mr-2" onClick={() => handleExtract(item.filename)}>Extract</button>
-                <button className="btn mr-2" onClick={() => handleDelete(item.filename)}>Delete</button>
-              </td>
-            </tr>
-          ))}
+          {!loading &&
+            pdfFiles.map((item, index) => (
+              <tr key={index}>
+                <td>{item.filename.substring(14)}</td>
+                <td>
+                  <button className="btn mr-2" onClick={() => handleView(item.filename)}>View</button>
+                  <button className="btn mr-2" onClick={() => handleExtract(item.filename)}>Extract</button>
+                  <button className="btn mr-2" onClick={() => handleDelete(item.filename)}>Delete</button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
+      <div className='pageDiv'>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+          <button
+            key={page}
+            className="pagination-button"
+            onClick={() => handlePageChange(page)}
+            disabled={page === currentPage} // Disable button if it represents the current page
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+      <div className='pageDiv'>
+        <p>Page {currentPage} of {totalPages}</p>
+      </div>
     </div>
   );
 };
