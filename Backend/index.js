@@ -18,6 +18,10 @@ app.get("/" ,(req,res)=>{
   res.json("hello World");
 })
 
+app.get("/login" ,(req,res)=>{
+  res.json("hello World");
+})
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
