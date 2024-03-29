@@ -14,7 +14,7 @@ app.use(cors({
 }));
 
 
-app.get("/api" ,(req,res)=>{
+app.get("/api/" ,(req,res)=>{
   res.json("hello World");
 })
 
