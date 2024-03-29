@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    const connectionInstance =  mongoose.connect(
+    const connectionInstance =  await mongoose.connect(
       'mongodb+srv://arunsharma96025:8N5fNZzIIUIUeL3p@pdfeditor.lu4uirh.mongodb.net/?retryWrites=true&w=majority&appName=PdfEditor'
     );
     console.log(
