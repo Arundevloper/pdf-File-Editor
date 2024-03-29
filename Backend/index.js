@@ -13,6 +13,9 @@ app.use(cors({
   credentials: true 
 }));
 
+dotenv.config({
+  path: './.env'
+})
 
 app.get("/" ,(req,res)=>{
   res.json("hello World");
