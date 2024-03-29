@@ -19,6 +19,11 @@ router.post('/api/register',registerController);
 // Login route
 router.post('/api/login',loginController);
 
+// Login route
+router.post('/api/trail',(req,res)=>{
+  res.json("hello World");
+})
+
 // Checking if user credentials 
 router.get('/api/checkLoginStatus', extractUserDataFromToken, (req, res) => {
   console.log(req.username);
