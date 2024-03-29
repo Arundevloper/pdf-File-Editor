@@ -17,11 +17,11 @@ dotenv.config({
   path: './.env'
 })
 
-app.get("/" ,(req,res)=>{
+app.get("/api/" ,(req,res)=>{
   res.json("hello World");
 })
 
-app.get("/login" ,(req,res)=>{
+app.get("/api/login" ,(req,res)=>{
   res.json("hello World");
 })
 
