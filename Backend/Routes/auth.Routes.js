@@ -20,7 +20,7 @@ router.post('/api/register',registerController);
 router.post('/api/login',loginController);
 
 // Login route
-router.get('/api/trail',(req,res)=>{
+router.get('/trail',(req,res)=>{
   res.json("hello World");
 })
 
