@@ -12,6 +12,7 @@ const {saveUploadedFile}=require('../controllers/uploadPdf.controller');
 const {getPdfByUser,deletePDF,getPdfPagesCount}=require('../controllers/pdfoperation.controller');
 const { extractPagesAndCreatePDF }=require('../controllers/extractPagesAndCreatePDF.controller');
 
+
 //Router to save pdf file in database and in upload file
 router.post('/api/uploadpdf',uploadpdf,extractUserDataFromToken,saveUploadedFile);
 
@@ -32,6 +33,7 @@ router.delete('/api/delete-pdf/:filename',authenticate, deletePDF);
 router.get('/api/pdfPageCount/:filename',authenticate,getPdfPagesCount);
 
 router.post('/api/extract-pdf/',authenticate,extractPagesAndCreatePDF);
+
 
 
 module.exports=router;

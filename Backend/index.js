@@ -30,7 +30,7 @@ app.use('/', pdfRoutes);
 
 
 const PORT = process.env.PORT || 5000;
-connectDb('pdf_Editor');
+connectDb();
 
 
 app.listen(PORT, () => {

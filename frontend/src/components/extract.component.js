@@ -11,7 +11,7 @@ const PageSelector = () => {
   const [selectedPages, setSelectedPages] = useState([]);
   const navigate = useNavigate(); // Initialize useNavigate hook
 
-  //Retrive the files form server
+  //Retrive the total pages from pdf file
   const fetchPageNumbers = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/pdfPageCount/${fileName}`, { withCredentials: true });
@@ -28,7 +28,7 @@ const PageSelector = () => {
   }, []);
 
 
-  
+  //Post request to extract the pdf and display in the browser
   const handleExtractPages = async () => {
     const data = {
       filename: fileName,

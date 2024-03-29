@@ -10,8 +10,8 @@ const registerController = require('../controllers/userRegister.controller');
 const loginController = require('../controllers/login.controller');
 
 //jwt files
-const jwt = require('jsonwebtoken');
-const jwtSecret = process.env.JWT_SECRET;
+// const jwt = require('jsonwebtoken');
+// const jwtSecret = process.env.JWT_SECRET;
 
 // Register route
 router.post('/api/register',registerController);

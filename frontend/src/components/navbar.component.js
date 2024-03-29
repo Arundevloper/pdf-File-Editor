@@ -43,41 +43,41 @@ const Navbar = () => {
   };
 
   const handleRegister = () => {
-    // Navigate to the register page if not already on it, or to the login page if already on the register page
+    
     if (isRegisterPage) {
-      navigate('/home');
+      navigate('/');
     } else {
       navigate('/register');
     }
   };
-  // const handleMerge = () => {
-  //     navigate('/mergepdf');
-  // };
+   const handleMerge = () => {
+      navigate('/mergepdf');
+   };
 
   return (
     <div>
       <nav className="navbar1 navbar-expand-lg  navbar-light">
         <div className="outerBox">
           <div className="box1">
-            <a className="navbar-brand" href="#">PdfEditor</a>
+            <a className="navbar-brand" >PdfEditor</a>
           </div>
           <div className="box2" >
             <ul className="navbar-nav ul-list ">
               {isLoggedIn ? (
                 <>
                   <li className="nav-item usernav1">
-                    <a className="nav-link usernav" href="#"><span className="username">Welcome-</span><span className='usernames'>{username}</span></a>
+                    <a className="nav-link usernav" ><span className="username">Welcome-</span><span className='usernames'>{username}</span></a>
                   </li>
-                  {/* <li className="nav-item" >
-                    <a className="nav-link logout" href="#" onClick={handleMerge}>MergePDF</a>
-                  </li> */}
                   <li className="nav-item" >
-                    <a className="nav-link logout" href="#" onClick={handleLogout}>Logout</a>
+                    <a className="nav-link logout"  onClick={handleMerge}>MergePDF</a>
+                  </li> 
+                  <li className="nav-item" >
+                    <a className="nav-link logout"  onClick={handleLogout}>Logout</a>
                   </li>
                 </>
               ) : (
                 <li className="nav-item" >
-                  <a className="nav-link logout" href="#" onClick={handleRegister}>
+                  <a className="nav-link logout"  onClick={handleRegister}>
                     {isRegisterPage ? "Login" : "Register"}
                   </a>
                 </li>

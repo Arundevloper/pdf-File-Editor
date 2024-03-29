@@ -6,6 +6,7 @@ import Login from './components/login.component';
 import RegistrationForm from './components/register.component';
 import DynamicTable from './components/table.component';
 import PageSelector from './components/extract.component';
+import Footer from './components/footer.component';
 
 
 
@@ -28,14 +29,15 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<Login updateNavbarKey={updateNavbarKey} />}
+           element={<Login updateNavbarKey={updateNavbarKey} />}
           />
           <Route path='/register' element={<RegistrationForm />} />
           <Route path='/home' element={<DynamicTable />} />
           <Route path='/extract/:fileName' element={<PageSelector />} />
+  
       
         </Routes>
-       
+     
       </Router>
     </>
   );

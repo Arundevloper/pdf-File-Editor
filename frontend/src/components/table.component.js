@@ -9,7 +9,6 @@ const DynamicTable = () => {
 
   const [pdfFiles, setPdfFiles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
   const [color, setColor] = useState('');
@@ -60,7 +59,7 @@ const DynamicTable = () => {
 
     } catch (error) {
       console.error('Error fetching data:', error);
-      setError('Error fetching data');
+     
     } finally {
       setLoading(false);
     }
@@ -126,7 +125,7 @@ const DynamicTable = () => {
         handleShowMessage(`"${fileNameSub} file deleted"`, 'danger');
       })
       .catch(error => {
-        const fileNameSub = fileName.substring(14);
+
         console.error(`Error deleting file "${fileName}":`, error);
         handleShowMessage(`Error deleting file "${fileName}": ${error.message}`, 'danger');
       });

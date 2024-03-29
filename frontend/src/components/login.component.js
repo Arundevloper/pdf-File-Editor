@@ -17,6 +17,8 @@ const MyForm = ({ updateNavbarKey }) => { // Pass updateNavbarKey as a prop
       password: password
     };
 
+
+    //Check user credentials
     axios.post('http://localhost:5000/api/login', formData, {
         withCredentials: true
       })
