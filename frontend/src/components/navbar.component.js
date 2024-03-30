@@ -13,7 +13,8 @@ const Navbar = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/checkLoginStatus', {withCredentials: true});
+        const response = await axios.get('https://pdf-file-editor-eqpx.vercel.app/api/checkLoginStatus', { withCredentials: true });
+
         const data = response.data;
         if (data.loggedIn) {
           setIsLoggedIn(true);

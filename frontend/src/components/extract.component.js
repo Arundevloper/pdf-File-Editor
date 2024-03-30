@@ -14,7 +14,8 @@ const PageSelector = () => {
   //Retrive the total pages from pdf file
   const fetchPageNumbers = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/pdfPageCount/${fileName}`, { withCredentials: true });
+      const response = await axios.get(`https://pdf-file-editor-eqpx.vercel.app/api/pdfPageCount/${fileName}`, { withCredentials: true });
+
       //console.log("this is response" + response.data.pageCount);
       setPageCount(response.data.pageCount);
     } catch (error) {
@@ -36,7 +37,7 @@ const PageSelector = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/extract-pdf', {
+      const response = await fetch('https://pdf-file-editor-eqpx.vercel.app/api/extract-pdf', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -44,6 +45,7 @@ const PageSelector = () => {
         body: JSON.stringify(data),
         credentials: 'include'
       });
+      
       navigate('/home');
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);

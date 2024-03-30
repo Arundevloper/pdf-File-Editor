@@ -35,7 +35,7 @@ const DynamicTable = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/checkLoginStatus', { withCredentials: true });
+        const response = await axios.get('https://pdf-file-editor-eqpx.vercel.app/api/checkLoginStatus', { withCredentials: true });
         const data1 = response.data;
         if (!data1.loggedIn) {
           navigate('/');
@@ -52,14 +52,15 @@ const DynamicTable = () => {
   //Retrive the files form server
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/getPdfByUser?page=${currentPage}`, { withCredentials: true });
+      const response = await axios.get(`https://pdf-file-editor-eqpx.vercel.app/api/getPdfByUser?page=${currentPage}`, { withCredentials: true });
+
       setPdfFiles(response.data.pdfFiles);
       setTotalPages(response.data.totalPages);
       console.log("toatl page is" + response.data)
 
     } catch (error) {
       console.error('Error fetching data:', error);
-     
+
     } finally {
       setLoading(false);
     }
@@ -86,12 +87,13 @@ const DynamicTable = () => {
       const formData = new FormData();
       formData.append('uploadpdf', file);
 
-      axios.post('http://localhost:5000/api/uploadpdf', formData, {
+      axios.post('https://pdf-file-editor-eqpx.vercel.app/api/uploadpdf', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
         withCredentials: true
       })
+
         .then(response => {
 
           handleShowMessage('File uploaded successfully', 'success');
@@ -117,7 +119,7 @@ const DynamicTable = () => {
 
 
   const handleDelete = (fileName) => {
-    axios.delete(`http://localhost:5000/api/delete-pdf/${fileName}`, { withCredentials: true })
+    axios.delete(`https://pdf-file-editor-eqpx.vercel.app/api/delete-pdf/${fileName}`, { withCredentials: true })
       .then(response => {
         const fileNameSub = fileName.substring(14);
         console.log(`File "${fileName}" deleted successfully`);
@@ -134,10 +136,11 @@ const DynamicTable = () => {
 
   const handleView = async (fileName) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/view-pdf/${fileName}`, {
+      const response = await axios.get(`https://pdf-file-editor-eqpx.vercel.app/api/view-pdf/${fileName}`, {
         responseType: 'blob', // Specify response type as blob
         withCredentials: true
       });
+
 
       // Create a Blob object from the response data
       const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -184,7 +187,7 @@ const DynamicTable = () => {
           </tr>
         </thead>
         <tbody>
-        {
+          {
             loading && (
               <div className="empty">
                 <p>Loading...</p>
