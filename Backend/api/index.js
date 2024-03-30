@@ -3,9 +3,9 @@ const app = express();
 require('dotenv').config();
 const path = require('path');
 const cors = require('cors');
-const connectDb = require('./database/dbConnect');
-const Routes = require('./Routes/auth.Routes');
-const pdfRoutes = require('./Routes/pdf.Routes');
+const connectDb = require('../database/dbConnect');
+const Routes = require('../Routes/auth.Routes');
+const pdfRoutes = require('../Routes/pdf.Routes');
 
 
 app.use(cors({
