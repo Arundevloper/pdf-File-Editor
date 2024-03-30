@@ -35,11 +35,8 @@ const getPdfByUser = async (req, res) => {
 
 const deletePDF = async (req, res) => {
     try {
-        console.log("check");
-
         const filename = req.params.filename;
         const pdf = await PDF.findOne({ filename });
-
 
         const filePath = path.join(__dirname, '../uploads', filename);
         await fs.unlink(filePath);
@@ -52,6 +49,7 @@ const deletePDF = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while deleting the PDF file' });
     }
 };
+
 
 const getPdfPagesCount = async (req, res) => {
     const filename = req.params.filename;
