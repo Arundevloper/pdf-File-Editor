@@ -14,7 +14,7 @@ const { extractPagesAndCreatePDF }=require('../controllers/extractPagesAndCreate
 
 
 //Router to save pdf file in database and in upload file
-router.post('/api/uploadpdf',uploadpdf,extractUserDataFromToken,saveUploadedFile);
+router.post('/api/uploadpdf',uploadpdf);
 
 
 
