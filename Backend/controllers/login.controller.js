@@ -27,14 +27,14 @@ async function login(req, res) {
 
 
         // If login is successful, send JSON response indicating success
-        res.status(200).json({
-            token 
+        res.status(200).cookie("uid", token).json({
+            message: "Login successfully"
         });
 
 
     } catch (error) {
         console.error("Login error:", error.message);
-        return res.status(500).json({ error: "In dfsdsdfsternal server error" });
+        return res.status(500).json({ error: "Internal server error" });
     }
 }
 
