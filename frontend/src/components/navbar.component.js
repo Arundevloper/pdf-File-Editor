@@ -36,16 +36,34 @@ const Navbar = () => {
     setIsRegisterPage(location.pathname === '/register');
   }, [location.pathname]); // Listen for changes in location.pathname
 
-  const handleLogout = () => {
-    // Set the cookie to be deleted with appropriate attributes
-    document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure; SameSite=None";
   
-    // Update state or perform any other necessary actions
-    setIsLoggedIn(false);
-    setUsername("");
-    navigate('/'); // Navigate the user to the desired page
+  const handleLogout = async () => {
+    try {
+      // Make a request to the backend API to logout
+      const response = await fetch('https://pdf-file-editor-eqpx.vercel.app/api/logout', {
+        method: 'GET',
+        credentials: 'include', // Send cookies with the request
+      });
+  
+      // Check if the request was successful
+      if (response.ok) {
+        // Clear local state or perform any other necessary actions
+        setIsLoggedIn(false);
+        setUsername("");
+        
+        // Navigate the user to the desired page (home page)
+        navigate('/');
+      } else {
+        console.error('Logout failed:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
-  
+
+
+
+
 
   const handleRegister = () => {
     
