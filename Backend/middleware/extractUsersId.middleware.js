@@ -8,8 +8,8 @@ const extractUserDataFromToken = (req, res, next) => {
     if (!token) {
         console.log("User token not found");
         return res.json({
-            loggedIn: true,
-            username: "Arun"
+            loggedIn: false,
+            username: null
         });
     }
 
