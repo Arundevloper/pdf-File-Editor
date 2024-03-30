@@ -20,6 +20,7 @@ const extractUserDataFromToken = (req, res, next) => {
         // Add user ID and username to the request object
         req.userId = decoded.id;
         req.username = decoded.name;
+        console.log("cookie found");
 
         next(); // Move to the next middleware or route handler
 

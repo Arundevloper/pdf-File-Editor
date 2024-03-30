@@ -8,10 +8,10 @@ const Routes = require('../Routes/auth.Routes');
 const pdfRoutes = require('../Routes/pdf.Routes');
 
 
-app.use(cors({
-  origin:  'https://pdf-file-editor.vercel.app',
-  credentials: true 
-}));
+// app.use(cors({
+//   origin:  'https://pdf-file-editor.vercel.app',
+//   credentials: true 
+// }));
 
 
 app.get("/api/" ,(req,res)=>{
