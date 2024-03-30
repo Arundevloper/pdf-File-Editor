@@ -17,10 +17,11 @@ const MyForm = ({ updateNavbarKey }) => { // Pass updateNavbarKey as a prop
       password: password
     };
 
+
     //Check user credentials
-    axios.post('https://pdf-file-editor-eqpx.vercel.app/api/login', formData, { // Modified URL
-        withCredentials: true
-      })
+    axios.post('https://pdf-file-editor-eqpx.vercel.app/api/login', formData, {
+    withCredentials: true
+})
       .then(response => {
         console.log('Form submitted successfully:', response);
 
