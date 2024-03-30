@@ -3,7 +3,6 @@ const jwtSecret = "arun@321";
 
 function setUser(user) {
     try {
-        
         // Extract necessary information from the user object
         const payload = {
             id: user._id,
@@ -23,7 +22,22 @@ function setUser(user) {
 }
 
 function getUser(token) {
-    return jwt.verify(token, jwtSecret);
+    try {
+        // Verify and decode the JWT token
+        return jwt.verify(token, jwtSecret);
+    } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            // Token expired error
+            throw new Error("Token expired. Please log in again.");
+        } else if (error instanceof jwt.JsonWebTokenError) {
+            // Invalid token error
+            throw new Error("Invalid token. Please log in again.");
+        } else {
+            // Other errors
+            console.error("Error decoding JWT token:", error);
+            throw new Error("Failed to decode JWT token");
+        }
+    }
 }
 
 module.exports = {
