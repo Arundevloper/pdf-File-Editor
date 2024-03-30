@@ -27,8 +27,8 @@ async function login(req, res) {
 
         res.cookie('uid', token, {
             // Set appropriate options based on the environment
-            domain: process.env.NODE_ENV === 'production' ? '.yourdomain.com' : undefined,
-            secure: process.env.NODE_ENV === 'production',
+            domain: undefined,
+            secure:undefined,
             expires: new Date(Date.now() + 3600000), // 1 hour from now
             httpOnly: true
           });
