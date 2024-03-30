@@ -25,14 +25,14 @@ async function login(req, res) {
 
 
 
-
-        // If login is successful, send JSON response indicating success
-        res.status(200).cookie("uid", token, {
-            maxAge: 3600000 // 1 hour in milliseconds
-        }).json({
-            message: "Login successfully"
-        });
-        
+        res.cookie('uid', token, {
+            // Set appropriate options based on the environment
+            domain: process.env.NODE_ENV === 'production' ? '.yourdomain.com' : undefined,
+            secure: process.env.NODE_ENV === 'production',
+            expires: new Date(Date.now() + 3600000), // 1 hour from now
+            httpOnly: true
+          });
+          
 
 
     } catch (error) {
