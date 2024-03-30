@@ -27,8 +27,10 @@ async function login(req, res) {
 
 
         res.cookie("uid", token, {
+            Domain:undefined,
+            secure:false,
             withCredentials: true,
-            httpOnly: false,
+            httpOnly: true,
           });
           res.status(201).json({ message: "User logged in successfully", success: true });
 
