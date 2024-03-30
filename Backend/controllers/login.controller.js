@@ -23,16 +23,27 @@ async function login(req, res) {
         console.log("Login successfully");
         const token = setUser(user);
 
+        // Define cookie configuration
+        const cookieConfig = {
+            httpOnly: true, // Set to true to mitigate XSS attacks
+            expires: new Date(Date.now() + 24 * 3600000), // Example: Expires in 24 hours
+            secure: process.env.NODE_ENV !== 'development', // Set to true in production
+        };
+
+        // Customize cookie settings for development environment
+        if (process.env.NODE_ENV === 'development') {
+            cookieConfig.domain = 'undefined'; // Set domain to "undefined" in development
+            cookieConfig.secure = false; // Set secure to false in development
+            cookieConfig.name = 'uid'; // Omit the "__Secure-" prefix in development
+        }
+
+        // Set the token as a cookie
+        res.cookie(process.env.NODE_ENV === 'development' ? 'uid' : '__Secure-uid', token, cookieConfig);
 
 
 
-        res.cookie("uid", token, {
-            Domain:undefined,
-            secure:false,
-            withCredentials: true,
-            httpOnly: true,
-          });
-          res.status(201).json({ message: "User logged in successfully", success: true });
+
+        res.status(201).json({ message: "User logged in successfully", success: true });
 
 
     } catch (error) {
