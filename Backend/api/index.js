@@ -18,9 +18,6 @@ app.get("/api/" ,(req,res)=>{
   res.json("hello World 1234");
 })
 
-app.get("/api/login" ,(req,res)=>{
-  res.json("hello World 123");
-})
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
