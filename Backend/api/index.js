@@ -9,7 +9,7 @@ const pdfRoutes = require('../Routes/pdf.Routes');
 
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://vercel.com/arundevlopers-projects/pdf-file-editor'],
   credentials: true 
 }));
 

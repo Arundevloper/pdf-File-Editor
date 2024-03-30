@@ -23,7 +23,7 @@ const RegistrationForm = () => {
     };
 
     // Submitting user registration data to the backend
-    fetch('http://localhost:5000/api/register', {
+    fetch('https://pdf-file-editor-eqpx.vercel.app/api/register', { // Modified URL
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
