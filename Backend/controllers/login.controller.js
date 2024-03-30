@@ -20,17 +20,18 @@ async function login(req, res) {
             return res.status(400).json({ error: "Invalid username or password" });
         }
 
-        console.log("Login successfully");
-        const token = setUser(user);
+        // console.log("Login successfully");
+        // const token = setUser(user);
 
 
+        
 
+        // // If login is successful, send JSON response indicating success
+        // res.status(200).cookie("uid", token).json({
+        //     message: "Login successfully"
+        // });
 
-        // If login is successful, send JSON response indicating success
-        res.status(200).cookie("uid", token).json({
-            message: "Login successfully"
-        });
-
+        res.status(200);
 
     } catch (error) {
         console.error("Login error:", error.message);
