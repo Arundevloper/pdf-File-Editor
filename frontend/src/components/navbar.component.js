@@ -37,11 +37,15 @@ const Navbar = () => {
   }, [location.pathname]); // Listen for changes in location.pathname
 
   const handleLogout = () => {
-    document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    // Set the cookie to be deleted with appropriate attributes
+    document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure; SameSite=None";
+  
+    // Update state or perform any other necessary actions
     setIsLoggedIn(false);
     setUsername("");
-    navigate('/');
+    navigate('/'); // Navigate the user to the desired page
   };
+  
 
   const handleRegister = () => {
     
