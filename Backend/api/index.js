@@ -8,12 +8,6 @@ const Routes = require('../Routes/auth.Routes');
 const pdfRoutes = require('../Routes/pdf.Routes');
 
 
- app.use(cors({
-   origin:  'https://pdf-file-editor.vercel.app',
-  credentials: true 
-}));
-
-
 app.get("/api/" ,(req,res)=>{
   res.json("hello World 1234");
 })
@@ -24,10 +18,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
-
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/', Routes);
@@ -41,3 +31,14 @@ connectDb();
 app.listen(PORT, () => {
     console.log(`Server started at ${PORT}`);
 });
+
+app.use(
+  cors({
+    origin: ["https://pdf-file-editor.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
