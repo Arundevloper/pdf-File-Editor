@@ -38,6 +38,30 @@ const deletePDF = async (req, res) => {
         const filename = req.params.filename;
         const pdf = await PDF.findOne({ filename });
 
+        if (!pdf) {
+           const deletePDF = async (req, res) => {
+    try {
+        const filename = req.params.filename;
+        const pdf = await PDF.findOne({ filename });
+
+        if (pdf) {
+            const filePath = path.join(__dirname, '../uploads', filename);
+            await fs.unlink(filePath);
+        }
+
+  
+
+        await PDF.deleteOne({ filename });
+
+        res.status(200).json({ message: 'PDF file deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting PDF file:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the PDF file' });
+    }
+};
+
+        }
+
         const filePath = path.join(__dirname, '../uploads', filename);
         await fs.unlink(filePath);
 
