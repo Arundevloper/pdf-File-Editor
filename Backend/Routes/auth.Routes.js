@@ -17,9 +17,7 @@ const loginController = require('../controllers/login.controller');
 router.post('/api/register',registerController);
 
 // Login route
-router.post('/api/login',(req,res)=>{
-  res.json({"mai ho gya hu":"edfd"});
-});
+router.post('/api/login',loginController);
 
 // Login route
 router.get('/trail',(req,res)=>{
