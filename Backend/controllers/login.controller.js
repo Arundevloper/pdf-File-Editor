@@ -30,7 +30,7 @@ async function login(req, res) {
             domain: undefined,
             secure:undefined,
             expires: new Date(Date.now() + 3600000), // 1 hour from now
-            httpOnly: true
+            httpOnly: false
           });
           
 
