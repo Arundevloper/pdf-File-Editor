@@ -27,9 +27,12 @@ async function login(req, res) {
 
 
         // If login is successful, send JSON response indicating success
-        res.status(200).cookie("uid", token).json({
+        res.status(200).cookie("uid", token, {
+            maxAge: 3600000 // 1 hour in milliseconds
+        }).json({
             message: "Login successfully"
         });
+        
 
 
     } catch (error) {
