@@ -42,7 +42,7 @@ const Navbar = () => {
       // Make a request to the backend API to logout
       const response = await fetch('https://pdf-file-editor-eqpx.vercel.app/api/logout', {
         method: 'GET',
-        credentials: 'include', // Send cookies with the request
+        credentials: 'include', // Use 'include' to send cookies with the request
       });
   
       // Check if the request was successful
@@ -59,7 +59,7 @@ const Navbar = () => {
     } catch (error) {
       console.error('Error during logout:', error);
     }
-  };
+};
 
 
 

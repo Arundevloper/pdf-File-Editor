@@ -40,9 +40,6 @@ const deletePDF = async (req, res) => {
         const filename = req.params.filename;
         const pdf = await PDF.findOne({ filename });
 
-        if (!pdf) {
-            return res.status(404).json({ error: 'PDF file not found' });
-        }
 
         const filePath = path.join(__dirname, '../uploads', filename);
         await fs.unlink(filePath);
