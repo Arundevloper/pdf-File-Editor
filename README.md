@@ -1,5 +1,3 @@
-
-## You can see the project running here: link:https://photos.app.goo.gl/oxco6ej37Jfu51M39
 ### Technology Used
   # React.js # Node.js # MongoDb # express.js
 ## How to Run
