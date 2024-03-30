@@ -26,16 +26,10 @@ async function login(req, res) {
 
 
 
-        // Set the uid cookie with the token
-        res.cookie("uid", token, {
-            domain: '.pdf-file-editor.vercel.app',
-            maxAge: 3600000, // Cookie expiry time in milliseconds (optional)
-            httpOnly: true, // Set to true to prevent client-side access (optional)
-            secure: true // Set to true if your application is served over HTTPS (optional)
-        }).json({
+        // If login is successful, send JSON response indicating success
+        res.status(200).cookie("uid", token).json({
             message: "Login successfully"
         });
-
 
 
     } catch (error) {
