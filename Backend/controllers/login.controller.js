@@ -27,7 +27,8 @@ async function login(req, res) {
 
 
         // If login is successful, send JSON response indicating success
-        res.cookie('uid', token, {
+        res.cookie('uid', token, {      
+            httpOnly: true,
             secure: true,
             sameSite: 'none' // Use 'none' for cross-domain cookies with third-party contexts
           }).status(200).json({ message: "Cookie set successfully" });
