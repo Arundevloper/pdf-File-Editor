@@ -15,11 +15,11 @@ app.use(cors({
 
 
 app.get("/api/" ,(req,res)=>{
-  res.json("hello World");
+  res.json("hello World 123");
 })
 
 app.get("/api/login" ,(req,res)=>{
-  res.json("hello World");
+  res.json("hello World 123");
 })
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
