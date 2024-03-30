@@ -20,31 +20,21 @@ async function login(req, res) {
             return res.status(400).json({ error: "Invalid username or password" });
         }
 
-        console.log("Login successfully");
+        // If login is successful, generate JWT token
         const token = setUser(user);
 
-        // Define cookie configuration
-        const cookieConfig = {
-            httpOnly: true, // Set to true to mitigate XSS attacks
-            expires: new Date(Date.now() + 24 * 3600000), // Example: Expires in 24 hours
-            secure: process.env.NODE_ENV !== 'development', // Set to true in production
+        // Set cookie options based on the environment
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : undefined
         };
 
-        // Customize cookie settings for development environment
-        if (process.env.NODE_ENV === 'development') {
-            cookieConfig.domain = 'undefined'; // Set domain to "undefined" in development
-            cookieConfig.secure = false; // Set secure to false in development
-            cookieConfig.name = 'uid'; // Omit the "__Secure-" prefix in development
-        }
+        // Set the JWT token as a cookie
+        res.cookie('uid', token, cookieOptions);
 
-        // Set the token as a cookie
-        res.cookie(process.env.NODE_ENV === 'development' ? 'uid' : '__Secure-uid', token, cookieConfig);
-
-
-
-
-        res.status(201).json({ message: "User logged in successfully", success: true });
-
+        // Send JSON response indicating success
+        return res.status(200).json({ message: "Cookie set successfully" });
 
     } catch (error) {
         console.error("Login error:", error.message);
